@@ -1,0 +1,28 @@
+<beast version='2.0' namespace='phydyn.model:beast.util:beast.evolution.alignment:beast.evolution.tree'>
+  <model spec='PopModelODE' id="twopopsasyccomp"  popParams="@initialValues" modelParams="@rates" evaluator="compiled">
+    <definition spec="Definition"> N = F+C1+C2 </definition>
+    <matrixeq spec='MatrixEquation' type="birth" origin="C1" destination="C1"> beta1*C1*F/N - alpha1*C2</matrixeq>
+    <matrixeq spec='MatrixEquation' type="birth" origin="C2" destination="C2"> beta2*C2*F/N - alpha2*C1</matrixeq>
+    <matrixeq spec='MatrixEquation' type="death" origin="C1"> gamma*C1 </matrixeq>
+    <matrixeq spec='MatrixEquation' type="death" origin="C2"> gamma*C2 </matrixeq>
+    <matrixeq spec='MatrixEquation' type="nondeme" origin="F">
+      - (beta1*C1*F/N - alpha1*C2 + beta2*C2*F/N - alpha2*C1) + (gamma*C1 + gamma*C2)
+    </matrixeq>
+  </model>
+
+  <rates spec="ModelParameters" id='rates'>
+    <param spec='ParamValue' names='gamma' values='0.01'/> <!-- death rate-->
+    <param spec='ParamValue' names='beta1' values='0.15'/> <!-- Replication rate of C1-->
+    <param spec='ParamValue' names='beta2' values='0.1'/> <!-- Replication rate of C2-->
+    <param spec='ParamValue' names='alpha1' values='-0.01'/> <!-- Competition C2->C1: proportionallity constant of the reduction in replication rate of C1 exerted by the size of C2-->
+    <param spec='ParamValue' names='alpha2' values='0.005'/> <!-- Competition C1->C2: proportionallity constant of the reduction in replication rate of C2 exerted by the size of C1-->
+  </rates>
+
+  <trajparams id='initialValues' spec='TrajectoryParameters' method="adams-bashforth"
+    integrationSteps="1001" rTol="0.01" aTol="1.0e-4" order="3" t0="0" t1="500">
+    <initialValue spec="ParamValue" names='C1 C2' values='1 1' />
+    <initialValue spec="ParamValue" names='F' values='998' />
+  </trajparams>
+
+  <run spec='TrajectoryOut' model='@twopopsasyccomp' file="twopopsasyccomp.csv">   </run>
+</beast>
