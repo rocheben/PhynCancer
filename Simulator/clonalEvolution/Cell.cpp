@@ -23,7 +23,7 @@ Cell::Cell(Model* pModel,Cell* pParentCell)
     }
     else{
         for(int lIndex=0;lIndex<pModel->getGenomeLength();lIndex++){
-            genome[lIndex]=ceil(pModel->getRandom()->getUnif()*4);
+            genome[lIndex]=ceil(pModel->getRandom()->getUnif()*4)-1;
         }
     }
 }

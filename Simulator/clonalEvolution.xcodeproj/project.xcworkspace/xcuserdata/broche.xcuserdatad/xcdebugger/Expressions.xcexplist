@@ -3,10 +3,34 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "Cell::Cell(Model*, Cell*):Cell.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "genome[lIndex]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "main:main.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "genome[lIndex]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "Cell::cellMutation(bool):Cell.cpp">
          <PersistentStrings>
             <PersistentString
                value = "genome[0]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Model::conversionSequence(int*, char*):model.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "pSeqInt[i]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

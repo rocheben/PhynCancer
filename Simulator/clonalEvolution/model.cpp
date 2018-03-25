@@ -96,9 +96,10 @@ Model::~Model(){
 /** Simulation behavior for one thread version*/
 void Model::go(){
     //Start the simulation
-    bool writeAll=true;
     for(double t=0;t<tMax;t+=timeStep){
-        cout<<t<<endl;
+        if( ((long)t % (long)100) == 0){
+            cout<<t<<endl;
+        }
         
         for(int lIndex=0;lIndex<listCells->length();lIndex++){
             Cell* lCell=((Cell*)(listCells->getElement(lIndex)));
@@ -109,10 +110,21 @@ void Model::go(){
 
 void Model::conversionSequence(int* pSeqInt,char* pSeqChar){
     for(int i=0;i<genomeLength;i++){
-        if(pSeqInt[i]==0){pSeqChar[i]='A';}
-        if(pSeqInt[i]==1){pSeqChar[i]='C';}
-        if(pSeqInt[i]==2){pSeqChar[i]='T';}
-        if(pSeqInt[i]==3){pSeqChar[i]='G';}
+        if(pSeqInt[i]==0){
+            pSeqChar[i]='A';
+        }
+        if(pSeqInt[i]==1){
+            pSeqChar[i]='C';
+            
+        }
+        if(pSeqInt[i]==2){
+            pSeqChar[i]='T';
+            
+        }
+        if(pSeqInt[i]==3){
+            pSeqChar[i]='G';
+            
+        }
     }
     pSeqChar[(long)genomeLength]='\0';
 }
@@ -127,23 +139,23 @@ void Model::writeData(){
     FILE* lFileSeq=fopen(lFileName,"wt");
     sprintf(lFileName,"%s_tree.dat",output);
     FILE* lFileTree=fopen(lFileName,"wt");
-    
+    cout<<"Writing file..."<<endl;
     //Write sequence file
     for(int i=0;i<listCells->length();i++){
         //Sequence recuperation
         Cell* lCell=(Cell*)listCells->getElement(i);
         conversionSequence(lCell->getGenome(),lSequence);
-        sprintf(lLine,"%d\t%s\n", i,lSequence);
+        sprintf(lLine,"%d\n%s\n",i,lSequence);
         fwrite(lLine,1,strlen(lLine),lFileSeq);
-        //Genealogy recuperation
-        /*Cell* lCellParent=lCell;
-        strcpy(lLine,"");
-        while(lCellParent!=NULL){
-            sprintf(lLine,"%s,%le",lLine,lCellParent->getID());
-            lCellParent=lCell->getParent();
+        //Parent recuperation
+        Cell* lCellParent=lCell;
+        sprintf(lLine,"%ld",lCellParent->getID());
+        lCellParent=lCellParent->getParent();
+        if(lCellParent!=NULL){
+            sprintf(lLine,"%s,%ld",lLine,lCellParent->getID());
         }
         sprintf(lLine,"%s\n",lLine);
-        fwrite(lLine,1,strlen(lLine),lFileTree);*/
+        fwrite(lLine,1,strlen(lLine),lFileTree);
     }
     fclose(lFileSeq);
     fclose(lFileTree);

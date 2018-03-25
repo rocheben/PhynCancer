@@ -13,11 +13,11 @@ int main(int argc,char* argv[])
     char loutputFile[256];
     strcpy(loutputFile,"testClonalEvolution");
     float lTimeStep=1;
-    double lTimeMax=100;
+    double lTimeMax=2000;
     double lEpochalMutationRate=0.0000;
     double lGenomeLength=100000;
-    double lResourcesAmount=100000;
-    double lInitialDivisionRate=0.01;
+    double lResourcesAmount=30;
+    double lInitialDivisionRate=0.002;
     double lNeutralMutationProbability=0.01;
     int lNbClonesInitial=2;
     
